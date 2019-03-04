@@ -49,8 +49,7 @@ class Network(object):
         self.update_weight(rate)
 
     def calc_gradient(self, label):
-        label = list(label)
-        print(label)
+        # 输出层的误差：yi(1-yi)(label-yi)
         delta = self.layers[-1].activator.backward(self.layers[-1].output) * (label - self.layers[-1].output)
         for layer in self.layers[::-1]:
             layer.backward(delta)

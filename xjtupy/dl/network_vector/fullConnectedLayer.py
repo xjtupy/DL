@@ -21,8 +21,7 @@ class FullConnectedLayer(object):
         self.output_size = output_size
         self.activator = activator
         # 权重数组W
-        self.W = np.random.uniform(-0.1, 0.1,
-                                   (output_size, input_size))
+        self.W = np.random.uniform(-0.1, 0.1, (output_size, input_size))
         # 偏置项b
         self.b = np.zeros((output_size, 1))
         # 输出向量
@@ -34,7 +33,6 @@ class FullConnectedLayer(object):
         input_array: 输入向量，维度必须等于input_size
         """
         # 式2
-        input_array = list(input_array)
         self.input = input_array
         self.output = self.activator.forward(np.dot(self.W, input_array) + self.b)
 
@@ -44,8 +42,7 @@ class FullConnectedLayer(object):
         delta_array: 从上一层传递过来的误差项
         """
         # 式8
-        self.delta = self.activator.backward(self.input) * np.dot(
-            self.W.T, delta_array)
+        self.delta = self.activator.backward(self.input) * np.dot(self.W.T, delta_array)
         self.W_grad = np.dot(delta_array, self.input.T)
         self.b_grad = delta_array
 

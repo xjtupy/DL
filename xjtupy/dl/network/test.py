@@ -43,15 +43,14 @@ def gradient_check(network, sample_feature, sample_label):
     sample_label: 样本的标签
     '''
     # 计算网络误差
-    network_error = lambda vec1, vec2: \
-        0.5 * reduce(lambda a, b: a + b,
-                     map(lambda v: (v[0] - v[1]) * (v[0] - v[1]),
-                         zip(vec1, vec2)))
+    network_error = lambda vec1, vec2: 0.5 * reduce(lambda a, b: a + b,
+                                                    map(lambda v: (v[0] - v[1]) * (v[0] - v[1]), zip(vec1, vec2)))
 
     # 获取网络在当前样本下每个连接的梯度
     network.get_gradient(sample_feature, sample_label)
 
     # 对每个权重做梯度检查
+    print("gradient check:")
     for conn in network.connections.connections:
         # 获取指定连接的梯度
         actual_gradient = conn.get_gradient()
@@ -69,8 +68,7 @@ def gradient_check(network, sample_feature, sample_label):
         expected_gradient = (error2 - error1) / (2 * epsilon)
 
         # 打印
-        print('expected gradient: \t%f\nactual gradient: \t%f' % (
-            expected_gradient, actual_gradient))
+        print('expected gradient: %f\t\tactual gradient: %f' % (expected_gradient, actual_gradient))
 
 
 def train_data_set():
@@ -117,3 +115,4 @@ if __name__ == '__main__':
     train(net)
     net.dump()
     correct_ratio(net)
+    gradient_check_test()
